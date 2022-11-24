@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+option go_package = "github.com/AllPaste/sdk/core/v1;core";
+
+import "google/protobuf/empty.proto";
+
+service PasteService {
+  rpc List (ListPasteRequest) returns (ListPasteReply);
+  rpc Create (CreatePasteRequest)returns (google.protobuf.Empty);
+  rpc Delete (ByIDPasteRequest)returns (google.protobuf.Empty);
+  rpc Put (PutPasteRequest)returns (google.protobuf.Empty);
+  rpc Get (ByIDPasteRequest)returns (Paste);
+}
+
+message Paste {
+  int64 id = 1;
+  int64 created_at = 2;
+  int64 updated_at = 3;
+  string name = 4;
+
+  bytes content = 5;
+}
+
+message ListPasteReply {
+  repeated Paste items = 1;
+  int64 count = 2;
+}
+
+message CreatePasteRequest{
+  string name = 1;
+  bytes content = 2;
+}
+
+message PutPasteRequest{
+  bytes content = 1;
+}
+
+message ByIDPasteRequest{
+  int64 id = 1;
+}
+
+message ListPasteRequest {
+  int64 page = 1;
+
+  int64 page_size = 2;
+
+  string name=3;
+}
+
+
